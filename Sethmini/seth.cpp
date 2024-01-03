@@ -47,16 +47,32 @@ void applyOverdraftCharge();
 
 };
 
-class Admin{
+class User{
+    protected:
+    string username;
+    string password;
+
     public:
+    User(const string uname,string pword) : username(uname),password(pword) {}
+    virtual ~User(){}
+    virtual void viewTransactions()=0;
+
+};
+
+
+class Admin : public User{
+    public:
+    Admin(string uname,string pword) : User(uname,pword) {}
     void addEmployee(string userName,string password);
     void increaseDate();
     void setAnnualSavingInterest(double interestRate);
     void setOverdraftCharge(double charge);
+    void viewTransactions() override;
 };
 
-class Employee{
+class Employee : public User{
     public:
+    Employee(string uname,string pword) : User(uname,pword){}
     void addCustomer(string userName,string password);
     void createAccount(Account* accountType, string customerName,string phoneNumber);
     void closeAccount(Account* account);
@@ -67,9 +83,11 @@ class Employee{
 
 };
 
-class Customer{
+class Customer : public User {
     public:
+    Customer(string uname,string pword): User(uname,pword) {}
     void viewTransactions(Account* account);
     void deposit(Account* account,double amount);
     void withdraw(Account* account,double amount);
+    void viewTransactions() override;
 };
