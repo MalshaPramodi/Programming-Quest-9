@@ -1,0 +1,6 @@
+2024-01-04 19:42:44 - Deposit of LKR 1000.00 by External Depositor
+2024-01-04 19:42:44 - Interest of LKR 30.00
+2024-01-05 10:49:07 - Deposit of LKR 1000.00 by External Depositor
+2024-01-05 10:49:07 - Interest of LKR 30.00
+2024-01-05 10:57:17 - Deposit of LKR 1000.00 by External Depositor
+2024-01-05 10:57:17 - Interest of LKR 30.00
