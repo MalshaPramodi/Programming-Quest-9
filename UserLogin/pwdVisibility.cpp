@@ -19,7 +19,8 @@ public:
 
     virtual void login() = 0; // Pure virtual function
     virtual string getPassword() const = 0; // Pure virtual function
-    virtual void displayMenu() = 0; // Pure virtual function
+    virtual int displayMenu() = 0; // Pure virtual function
+    virtual void performAction(int choice) = 0; // Pure virtual function
 };
 
 // Derived class for Administrator
@@ -30,19 +31,40 @@ public:
 
     void login() override {
         cout << "Administrator logged in." << endl;
-        displayMenu();
+        int choice;
+        do {
+            choice = displayMenu();
+            performAction(choice);
+        } while (choice != 3); // 3 is the option for Exit
     }
 
     string getPassword() const override {
         return password;
     }
 
-    void displayMenu() override {
+    int displayMenu() override {
         cout << "Administrator Menu:" << endl;
         cout << "1. Increase Date" << endl;
         cout << "2. Add Employee" << endl;
         cout << "3. Exit" << endl;
-        // Add more options as needed
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+        return choice;
+    }
+
+    void performAction(int choice) override {
+        switch (choice) {
+        case 1:
+            increaseDate();
+            break;
+        case 2:
+            cout << "Adding Employee... (placeholder)" << endl;
+            break;
+            // Add more cases for additional options
+        default:
+            cout << "Invalid choice. Try again." << endl;
+        }
     }
 
     void increaseDate() {
@@ -61,14 +83,18 @@ public:
 
     void login() override {
         cout << "Bank Employee logged in." << endl;
-        displayMenu();
+        int choice;
+        do {
+            choice = displayMenu();
+            performAction(choice);
+        } while (choice != 9); // 9 is the option for Exit
     }
 
     string getPassword() const override {
         return password;
     }
 
-    void displayMenu() override {
+    int displayMenu() override {
         cout << "Bank Employee Menu:" << endl;
         cout << "1. Add Customer" << endl;
         cout << "2. Create Saving Account" << endl;
@@ -79,7 +105,21 @@ public:
         cout << "7. Set Overdraft Limit" << endl;
         cout << "8. View Transactions" << endl;
         cout << "9. Exit" << endl;
-        // Add more options as needed
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+        return choice;
+    }
+
+    void performAction(int choice) override {
+        switch (choice) {
+        case 1:
+            cout << "Adding Customer... (placeholder)" << endl;
+            break;
+            // Add more cases for additional options
+        default:
+            cout << "Invalid choice. Try again." << endl;
+        }
     }
 
     // Other functionalities for Bank Employee
@@ -98,20 +138,41 @@ public:
 
     void login() override {
         cout << "Customer logged in." << endl;
-        displayMenu();
+        int choice;
+        do {
+            choice = displayMenu();
+            performAction(choice);
+        } while (choice != 4); // 4 is the option for Exit
     }
 
     string getPassword() const override {
         return password;
     }
 
-    void displayMenu() override {
+    int displayMenu() override {
         cout << "Customer Menu:" << endl;
         cout << "1. Deposit Money" << endl;
         cout << "2. Withdraw Money" << endl;
         cout << "3. View Transactions" << endl;
         cout << "4. Exit" << endl;
-        // Add more options as needed
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+        return choice;
+    }
+
+    void performAction(int choice) override {
+        switch (choice) {
+        case 1:
+            deposit(500.0);
+            break;
+        case 2:
+            withdraw(200.0);
+            break;
+            // Add more cases for additional options
+        default:
+            cout << "Invalid choice. Try again." << endl;
+        }
     }
 
     void deposit(double amount) {
@@ -133,10 +194,9 @@ public:
 };
 
 int main() {
-    string username;
-
     cout << "-------------------- LMN Online Banking System ----------------------------------" << endl;
 
+    string username;
     cout << "Enter username: ";
     cin >> username;
 
@@ -165,18 +225,11 @@ int main() {
         // Login the user and display the menu
         currentUser->login();
 
-        // Simulating deposit and withdrawal for customer
-        if (dynamic_cast<Customer*>(currentUser)) {
-            Customer* customer = dynamic_cast<Customer*>(currentUser);
-            customer->deposit(500.0);
-            customer->withdraw(200.0);
-        }
-
-        delete currentUser;  // Release memory allocated for the user
+        delete currentUser; // Release memory allocated for the user
     }
     else {
         cout << "Incorrect password. Exiting program." << endl;
-        delete currentUser;  // Release memory allocated for the user
+        delete currentUser; // Release memory allocated for the user
         return 1;
     }
 
