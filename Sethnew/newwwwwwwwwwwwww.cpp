@@ -180,7 +180,7 @@ public:
     }
 
     int displayMenu() override {
-        cout << "Customer Menu:" << endl;
+        cout << "\nCustomer Menu:" << endl;
         cout << "1. Deposit Money" << endl;
         cout << "2. Withdraw Money" << endl;
         cout << "3. View Transactions" << endl;
@@ -192,16 +192,21 @@ public:
     }
 
     void performAction(int choice) override {
+        double amountDeposit;
+        double amountWithdraw;
+
         switch (choice) {
         case 1:
-            deposit(500.0);
+            cout<<"Enter amount of money to deposit:";
+            cin>>amountDeposit;
+            deposit(amountDeposit);
             break;
 
         case 2:
-            withdraw(200.0);
+            cout<<"Enter amount of money to withdraw:";
+            cin>>amountWithdraw;
+            withdraw(amountWithdraw);
             break;
-
-            // Add more cases for additional options
         case 3:
             viewTransactions();
             break;
