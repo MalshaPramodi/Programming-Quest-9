@@ -1,0 +1,2 @@
+Amount: 500, Type: Deposit
+Amount: 200, Type: Withdrawal
