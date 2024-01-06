@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -27,9 +28,13 @@ public:
 
 // Derived class for Administrator
 class Administrator : public User {
+private:
+    double annualSavingInterest; // Variable to store annual saving interest
+    double overdraftCharge;      // Variable to store overdraft charge
+
 public:
     Administrator(const string& username)
-        : User(username, "Password@1234") {}
+        : User(username, "Password@1234"), annualSavingInterest(0.0), overdraftCharge(0.0){}
 
     void login() override {
         cout << "Administrator logged in." << endl;
@@ -48,7 +53,9 @@ public:
         cout << "Administrator Menu:" << endl;
         cout << "1. Increase Date" << endl;
         cout << "2. Add Employee" << endl;
-        cout << "3. Exit" << endl;
+        cout<<"3. Set annual interest rate"<<endl;
+        cout<<"4. Set overdraft charge"<<endl;
+        cout << "5. Exit" << endl;
         cout << "Enter your choice: ";
         int choice;
         cin >> choice;
@@ -65,8 +72,14 @@ public:
             addEmployee();
             break;
         case 3:
-            cout << "Exiting Customer Menu." << endl;
-            break; // Exiting the loop when choice is 3
+            setAnnualSavingInterest();
+            break;
+        case 4:
+            setOverdraftCharge();
+            break;
+        case 5:
+            cout << "Exiting Admin Menu." << endl;
+            break; // Exiting the loop 
         default:
             cout << "Invalid choice. Try again." << endl;
         }
@@ -89,6 +102,7 @@ public:
     // Other functionalities for Administrator
     void addEmployee(){
         string newEmployeeUsername;
+
         cout << "Enter new employee's username: ";
         cin >> newEmployeeUsername;
 
@@ -102,6 +116,19 @@ public:
         } else {
             cout << "Failed to create file for the employee." << endl;
         }
+    }
+    void setAnnualSavingInterest() {
+        cout << "Enter the annual saving interest rate (%): ";
+        cin >> annualSavingInterest;
+        cout << "Annual saving interest rate set to: " << fixed << setprecision(2) << annualSavingInterest << "%" << endl;
+        //methana meka one nam ganna anik functions walata
+    }
+
+    void setOverdraftCharge() {
+        cout << "Enter the overdraft charge: ";
+        cin >> overdraftCharge;
+        cout << "Overdraft charge set to: " << fixed << setprecision(2) << overdraftCharge << endl;
+        //methana meka one nam ganna anik functions walata
     }
 };
 
@@ -180,7 +207,7 @@ public:
     }
 
     int displayMenu() override {
-        cout << "Customer Menu:" << endl;
+        cout << "\nCustomer Menu:" << endl;
         cout << "1. Deposit Money" << endl;
         cout << "2. Withdraw Money" << endl;
         cout << "3. View Transactions" << endl;
@@ -192,16 +219,21 @@ public:
     }
 
     void performAction(int choice) override {
+        double amountDeposit;
+        double amountWithdraw;
+
         switch (choice) {
         case 1:
-            deposit(500.0);
+            cout<<"Enter amount of money to deposit:";
+            cin>>amountDeposit;
+            deposit(amountDeposit);
             break;
 
         case 2:
-            withdraw(200.0);
+            cout<<"Enter amount of money to withdraw:";
+            cin>>amountWithdraw;
+            withdraw(amountWithdraw);
             break;
-
-            // Add more cases for additional options
         case 3:
             viewTransactions();
             break;
